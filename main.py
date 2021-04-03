@@ -41,12 +41,23 @@ if args.name:
                     date_get = commit["commit"]["author"]["date"][:-1]
                     date = date_get.split('T')
                     convert = date[0].split('-')
+                    convert_time = date[1].split(':')
                     year = int(convert[0])
                     actual_year = int(time.year)
                     year_send = actual_year - year
                     month = int(convert[1])
                     actual_month = int(time.month)
                     month_send = actual_month - month
+                    day = int(convert[2])
+                    actual_day = int(time.day)
+                    day_send = actual_day - day
+                    hours = int(convert_time[0])+2
+                    print(hours)
+                    actual_hour = int(time.hour)
+                    hours_send = actual_hour - hours
+                    minute = int(convert_time[1])
+                    actual_minute = int(time.minute)
+                    minute_send = actual_minute - minute
 
                     if year_send > 0:
                         if year_send > 1:
@@ -57,7 +68,23 @@ if args.name:
                         if month_send > 1:
                             res_date = '{} months ago'.format(month_send)  
                         else:
-                            res_date = '{} month ago'.format(month_send)                     
+                            res_date = '{} month ago'.format(month_send)           
+                    elif day_send > 0:
+                        if day_send > 1:
+                            res_date = '{} days ago'.format(day_send)  
+                        else:
+                            res_date = '{} day ago'.format(day_send)     
+                    elif hours_send > 0:
+                        if hours_send > 1:
+                            res_date = '{} hours ago'.format(hours_send)  
+                        else:
+                            res_date = '{} hour ago'.format(hours_send) 
+                    else:
+                        if minute_send > 5:
+                            res_date = '{} minutes ago'.format(minute_send)  
+                        else:
+                            res_date = 'just now'                 
+          
 
                     print("{0}.".format(i), message, "- published", res_date, "by", committers)
 
